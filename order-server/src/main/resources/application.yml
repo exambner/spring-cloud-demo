@@ -1,0 +1,18 @@
+server:
+  port: 8080 # 服务端口号
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cloud_order?useSSL=false # 数据库连接url
+    username: root # 数据库用户名
+    password: wsl521314.. # 数据库密码
+    driver-class-name: com.mysql.cj.jdbc.Driver # 数据库驱动
+mybatis:
+  type-aliases-package: com.exambner.order # 指定POJO扫描包来让mybatis自动扫描到自定义的POJO
+  mapperLocations: classpath:mapper/**/*.xml # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  configuration:
+    map-underscore-to-camel-case: true # 实现数据库下划线字段与实体中的驼峰属性映射
+logging:
+  level:
+    com.exambner.order: debug # 设置日志级别，并指定日志范围com.exambner.order包
+  pattern:
+    dateformat: MM-dd HH:mm:ss # 指定日志里面的日期输出格式

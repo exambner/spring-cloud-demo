@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exambner.user.mapper.UserMapper">
+
+    <resultMap id="userResult" type="com.exambner.user.entity.User">
+        <result column="id" property="id"></result>
+        <result column="username" property="username"></result>
+        <result column="address" property="address"></result>
+    </resultMap>
+    <select id="list" parameterType="User" resultMap="userResult">
+        select id,username,address from user
+        <where>
+            <if test="username != null and username !=''">and username = #{username}</if>
+        </where>
+    </select>
+
+    <select id="findById" parameterType="Long" resultMap="userResult">
+        select id, username, address
+        from user
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="User" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="username != null">username,</if>
+            <if test="address != null">address,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="username != null">#{username},</if>
+            <if test="address != null">#{address},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="User">
+        update user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null">id = #{id},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="address != null">address = #{address},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="remove" parameterType="Long">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+</mapper>
